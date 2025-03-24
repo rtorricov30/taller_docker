@@ -1,0 +1,30 @@
+# .NET 8
+bin/
+obj/
+*.dbml
+*.suo
+*.user
+*.dotCover
+*.vs/
+TestResults/
+.vscode/
+.idea/
+*.csproj.user
+appsettings*.json
+!appsettings.Development.json
+secrets.json
+
+# Angular 19
+node_modules/
+dist/
+.angular/
+*.log
+*.tsbuildinfo
+
+# General
+.DS_Store
+Thumbs.db
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
