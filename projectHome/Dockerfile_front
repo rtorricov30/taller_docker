@@ -16,5 +16,14 @@ RUN npm run build --configuration=production
 FROM nginx:stable-alpine
 
 COPY --from=build  /app/dist/project-home/browser /usr/share/nginx/html
+#Se copia el archivo de configuración env-config.js al contenedor para que esté disponible en tiempo de ejecución.
+COPY src/assets/config/env-config.js /usr/share/nginx/html/assets/config/env-config.js
 
 COPY ./nginx-custom.conf  /etc/nginx/conf.d/default.conf
+#Se copia un script de entrada (entrypoint.sh) que configura el base href en el archivo env.js durante el inicio del contenedor.
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+#El contenedor se inicia ejecutando el script entrypoint.sh.
+#Comando para iniciar el contenedor
+ENTRYPOINT ["/entrypoint.sh"]
