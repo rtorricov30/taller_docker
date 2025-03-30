@@ -16,6 +16,7 @@ RUN npm run build --configuration=production
 FROM nginx:stable-alpine
 
 COPY --from=build  /app/dist/project-home/browser /usr/share/nginx/html
+
 #Se copia el archivo de configuración env-config.js al contenedor para que esté disponible en tiempo de ejecución.
 COPY src/assets/config/env-config.js /usr/share/nginx/html/assets/config/env-config.js
 

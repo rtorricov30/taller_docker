@@ -1,40 +1,30 @@
-name: vf_Docker
- 
-
+name: taller_docker
 
 services:
-  api_minimal:
-    image: api_minimal
-    container_name: api_minimal
+  proxy:
+    image: proxy
+    container_name: proxy
     ports:
-      - "8089:8080"
-    depends_on:
-    - mysql_bd
-    # environment:
-    # - ConnectionStrings__DefaultConnection="Server=mysql_bd;Port=3356;Database=bd_docker;User=admin;Password=Pass123!;"
+      - "8089:80"
     networks:
       - red-3
-  
+  api_minimal:
+    image:  api_minimal
+    container_name: api_minimal
+    networks:
+      - red-3
   app_home:
     image: app_home
     container_name: app_home
-    ports:
-      - "8090:80"
-    depends_on:
-      - api_minimal
     environment:
-      - API_BASE_URL=http://api_minimal:8080/
+      - API_BASE_URL=/api/
     networks:
       - red-3
-
   mysql_bd:
     image: mysql_bd
     container_name: mysql_bd
-    ports:
-      - "3306:3306"
-    
     networks:
       - red-3
 networks:
   red-3:
-    name: red-3
+    driver: bridge
